@@ -1,53 +1,67 @@
-const Event = require('./eventModel');
-const mongoose = require('mongoose');
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
-
-// MongoDB Connection
-mongoose.connect('mongodb+srv://bpro2855203:9876Mongodb@clusterthurst.aechtt1.mongodb.net/?retryWrites=true&w=majority&appName=Clusterthurst')
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error('MongoDB Connection Error:', err));
+const Event = require('./eventModel');
+const Contact = require('./contactModel'); // ✅ Add this line
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Sample API
-app.get('/', (req, res) => {
-    res.send('Backend API is working!');
-});
+// Connect to MongoDB
+mongoose.connect('mongodb+srv://bpro2855203:9876Mongodb@clusterthurst.aechtt1.mongodb.net/?retryWrites=true&w=majority&appName=Clusterthurst')
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.error('MongoDB Connection Error:', err));
 
-// ✅ POST API: Create a New Event
-app.post('/api/events', async (req, res) => {
-    try {
-        const newEvent = new Event(req.body);
-        await newEvent.save();
-        res.status(201).json(newEvent);
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating event', error });
-    }
-});
-
-// ✅ GET API: Fetch All Events
+// Get All Events
 app.get('/api/events', async (req, res) => {
     try {
         const events = await Event.find();
         res.json(events);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching events', error });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 
-// Delete Event (DELETE) ✅ Add this here
-app.delete('/api/events/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Event.findByIdAndDelete(id);
-    res.json({ message: 'Event deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ error: 'Error deleting event' });
-  }
+// Create New Event
+app.post('/api/events', async (req, res) => {
+    try {
+        const newEvent = await Event.create(req.body);
+        res.status(201).json(newEvent);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
-// Start Server
+// Update Event
+app.put('/api/events/:id', async (req, res) => {
+    try {
+        const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedEvent) return res.status(404).json({ message: 'Event not found' });
+        res.json({ message: 'Event updated successfully', updatedEvent });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete Event
+app.delete('/api/events/:id', async (req, res) => {
+    try {
+        await Event.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Event deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ✅ Contact API
+app.post('/api/contact', async (req, res) => {
+    try {
+        const newContact = await Contact.create(req.body);
+        res.status(201).json({ message: 'Contact saved successfully', newContact });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.listen(5000, () => console.log('Server running on http://localhost:5000'));
