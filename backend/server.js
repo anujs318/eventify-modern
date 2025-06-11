@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -15,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ Connect to MongoDB
-mongoose.connect('mongodb+srv://bpro2855203:9876Mongodb@clusterthurst.aechtt1.mongodb.net/?retryWrites=true&w=majority&appName=Clusterthurst')
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
 
@@ -23,8 +25,8 @@ mongoose.connect('mongodb+srv://bpro2855203:9876Mongodb@clusterthurst.aechtt1.mo
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'bpro855203@gmail.com', // Your Gmail
-        pass: 'upohcwtzfsowzvfy'   // Your App Password
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS
     }
 });
 
@@ -65,13 +67,12 @@ app.post('/api/request-reset', async (req, res) => {
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: 'User not found' });
 
-        // ✅ Delete previous reset tokens
         await ResetToken.deleteMany({ userId: user._id });
 
         const token = crypto.randomBytes(32).toString('hex');
         await ResetToken.create({ userId: user._id, token });
 
-        const resetLink = `http://localhost:3000/reset-password/${token}`;
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
         await transporter.sendMail({
             from: 'Eventify <bpro855203@gmail.com>',
@@ -168,4 +169,5 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // ✅ Server
-app.listen(5000, () => console.log('Server running on http://localhost:5000'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
