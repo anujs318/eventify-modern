@@ -27,7 +27,7 @@ export default function Dashboard() {
   }, []);
 
   const fetchEvents = () => {
-    axios.get(`http://localhost:5000/api/events?userId=${user.email}`)
+    axios.get(`https://eventify-modern-1.onrender.com/api/events?userId=${user.email}`)
       .then(res => setEvents(res.data))
       .catch(err => console.error(err));
   };

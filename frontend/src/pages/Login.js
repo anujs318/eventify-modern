@@ -11,7 +11,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/login', formData)
+    axios.post('https://eventify-modern-1.onrender.com/api/login', formData) // ✅ Updated URL
       .then(res => {
         alert('✅ Login Successful');
         localStorage.setItem('user', JSON.stringify(res.data.user));

@@ -10,7 +10,7 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/register', formData)
+    axios.post('https://eventify-modern-1.onrender.com/api/register', formData)
       .then(res => {
         alert('✅ Registration Successful');
         window.location.href = '/login';

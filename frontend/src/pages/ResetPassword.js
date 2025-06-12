@@ -9,7 +9,7 @@ export default function ResetPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:5000/api/reset-password/${token}`, { password })
+    axios.post(`https://eventify-modern-1.onrender.com/api/reset-password/${token}`, { password })
       .then(() => {
         alert('✅ Password reset successful!');
         navigate('/login');

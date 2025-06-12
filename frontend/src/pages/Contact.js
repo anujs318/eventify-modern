@@ -13,7 +13,7 @@ export default function Contact() {
   // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/contact', formData)
+    axios.post('https://eventify-modern-1.onrender.com/api/contact', formData)
       .then(() => {
         alert('✅ Contact submitted successfully!');
         setFormData({ name: '', email: '', message: '' }); // Reset form

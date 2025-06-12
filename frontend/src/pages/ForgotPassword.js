@@ -6,7 +6,7 @@ export default function ForgotPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/request-reset', { email })
+    axios.post('https://eventify-modern-1.onrender.com/api/request-reset', { email })
       .then(() => alert('✅ Reset link sent to your email.'))
       .catch(() => alert('❌ Error sending reset link.'));
   };
