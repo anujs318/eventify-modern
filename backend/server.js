@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
 
@@ -75,7 +75,7 @@ app.post('/api/request-reset', async (req, res) => {
         const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
         await transporter.sendMail({
-            from: 'Eventify <bpro855203@gmail.com>',
+            from: `Eventify <${process.env.GMAIL_USER}>`,
             to: email,
             subject: 'Password Reset Request - Eventify',
             html: `<p>Click the link to reset your password: <a href="${resetLink}">${resetLink}</a></p>`
@@ -170,4 +170,4 @@ app.post('/api/contact', async (req, res) => {
 
 // ✅ Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
