@@ -28,7 +28,7 @@ export default function Navbar() {
         <li><Link to="/dashboard" className="hover:text-blue-300">Dashboard</Link></li>
         <li><Link to="/venues" className="hover:text-blue-300">Venues</Link></li>
         <li><Link to="/invite" className="hover:text-blue-300">Send Invitation</Link></li>
-        <li><Link to="/admin" className="hover:text-blue-300">Send Invitation</Link></li>
+        <li><Link to="/admin" className="hover:text-blue-300">Admin Dashboard</Link></li>
 
 
 
