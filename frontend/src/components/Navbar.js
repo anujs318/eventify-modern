@@ -26,6 +26,8 @@ export default function Navbar() {
         <li><Link to="/contact" className="hover:text-blue-300">Contact</Link></li>
         <li><Link to="/about" className="hover:text-blue-300">About</Link></li>
         <li><Link to="/dashboard" className="hover:text-blue-300">Dashboard</Link></li>
+        <li><Link to="/venues" className="hover:text-blue-300">Venues</Link></li>
+
 
         {!user ? (
           <>

@@ -20,6 +20,21 @@ import Catering from './pages/Catering';
 
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import AdminDashboard from './pages/AdminDashboard';
+
+import ViewUsers from './pages/admin/ViewUsers'; 
+import ViewContacts from './pages/admin/ViewContacts'; // ✅ Import
+import ViewVenues from './pages/admin/ViewVenues'; // ✅ Import
+import AddVenue from './pages/admin/AddVenue'; // ✅ Import
+import VenueList from './pages/VenueList';
+
+
+
+
+
+
+<Route path="/admin/users" element={<ViewUsers />} /> 
+
 
 function App() {
   const location = useLocation();
@@ -39,6 +54,13 @@ function App() {
           <Route path="/guest-management" element={<GuestManagement />} />
           <Route path="/photography" element={<Photography />} />
           <Route path="/catering" element={<Catering />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<ViewUsers />} />     
+          <Route path="/admin/contacts" element={<ViewContacts />} />
+          <Route path="/admin/venues" element={<ViewVenues />} />
+          <Route path="/admin/add-venue" element={<AddVenue />} />
+          <Route path="/venues" element={<VenueList />} />
+
 
           {/* 🔐 Route Protection added here */}
           <Route

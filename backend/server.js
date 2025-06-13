@@ -11,6 +11,7 @@ const Event = require('./eventModel');
 const Contact = require('./contactModel');
 const User = require('./userModel');
 const ResetToken = require('./resetTokenModel');
+const Venue = require('./venueModel');
 
 const app = express();
 app.use(cors());
@@ -167,6 +168,122 @@ app.post('/api/contact', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// Create Venue
+app.post('/api/venues', async (req, res) => {
+  try {
+    const newVenue = await Venue.create(req.body);
+    res.status(201).json(newVenue);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get All Venues
+app.get('/api/venues', async (req, res) => {
+  try {
+    const venues = await Venue.find();
+    res.json(venues);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete Venue
+app.delete('/api/venues/:id', async (req, res) => {
+  try {
+    await Venue.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Venue deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//Get All Users:
+app.get('/api/admin/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//Get All Contacts:
+app.get('/api/admin/contacts', async (req, res) => {
+  try {
+    const contacts = await Contact.find();
+    res.json(contacts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//Backend API for Users
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get All Contacts
+app.get('/api/contacts', async (req, res) => {
+  try {
+    const contacts = await Contact.find();
+    res.json(contacts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/venues', async (req, res) => {
+  try {
+    const venues = await venues.find();
+    res.json(venues);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/venues', async (req, res) => {
+  try {
+    const newVenue = await Venue.create(req.body);
+    res.status(201).json(newVenue);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get All Venues
+app.get('/api/venues', async (req, res) => {
+  try {
+    const venues = await Venue.find();
+    res.json(venues);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Submit a Review to Venue
+app.post('/api/venues/:id/reviews', async (req, res) => {
+  try {
+    const venue = await Venue.findById(req.params.id);
+    if (!venue) return res.status(404).json({ message: 'Venue not found' });
+
+    const { user, comment } = req.body;
+
+    venue.reviews.push({ user, comment });
+    await venue.save();
+
+    res.json({ message: 'Review added successfully', venue });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // ✅ Server
 const PORT = process.env.PORT || 5000;
