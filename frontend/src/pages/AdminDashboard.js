@@ -11,8 +11,9 @@ export default function AdminDashboard() {
         <Link to="/admin/events" className="bg-purple-500 text-white p-4 rounded hover:bg-purple-600 text-center">View Events</Link>
         <Link to="/admin/contacts" className="bg-yellow-500 text-white p-4 rounded hover:bg-yellow-600 text-center">View Contact Messages</Link>
         <Link to="/admin/add-venue" className="bg-red-500 text-white p-4 rounded hover:bg-red-600 text-center">Add New Venue</Link>
+        <Link to="/admin/add-venue" className="bg-pink-500 text-white p-4 rounded hover:bg-pink-600 text-center">Add Venue</Link>
 
-        
+
       </div>
     </div>
   );

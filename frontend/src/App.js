@@ -29,6 +29,8 @@ import AddVenue from './pages/admin/AddVenue'; // ✅ Import
 import VenueList from './pages/VenueList';
 import InviteGuest from './pages/InviteGuest';
 
+import AdminAddVenue from './pages/AdminAddVenue';
+
 
 
 
@@ -65,6 +67,7 @@ function App() {
           <Route path="/admin/add-venue" element={<AddVenue />} />
           <Route path="/venues" element={<VenueList />} />
           <Route path="/invite" element={<InviteGuest />} />
+          <Route path="/admin/add-venue" element={<AdminAddVenue />} />
 
           {/* 🔐 Route Protection added here */}
           <Route
