@@ -284,6 +284,29 @@ app.post('/api/venues/:id/reviews', async (req, res) => {
   }
 });
 
+app.post('/api/send-invite', async (req, res) => {
+    try {
+        const { guestEmail, eventTitle, eventDate, eventLocation, message } = req.body;
+
+        await transporter.sendMail({
+            from: 'Eventify <bpro855203@gmail.com>',
+            to: guestEmail,
+            subject: `You're Invited to ${eventTitle}`,
+            html: `
+                <h2>You're Invited to ${eventTitle} 🎉</h2>
+                <p><strong>Date:</strong> ${eventDate}</p>
+                <p><strong>Location:</strong> ${eventLocation}</p>
+                <p>${message}</p>
+                <p>Looking forward to seeing you there!</p>
+            `
+        });
+
+        res.json({ message: '✅ Invitation sent successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '❌ Error sending invitation' });
+    }
+});
 
 // ✅ Server
 const PORT = process.env.PORT || 5000;
